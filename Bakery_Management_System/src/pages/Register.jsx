@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { getRequestHeader , API_URL } from "../utils/api";
 import logo from "../assets/logo.png";
 
+
 function Register() {
   const navigate = useNavigate();
 

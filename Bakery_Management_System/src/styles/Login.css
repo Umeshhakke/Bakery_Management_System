@@ -1,0 +1,246 @@
+/* =========================================================
+   LOGIN PAGE
+========================================================= */
+
+.login-page {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* padding: 30px 20px; */
+
+  background: #fff8f2;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   LOGIN CARD
+========================================================= */
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+
+  padding: 35px;
+
+  background: white;
+
+  border: 1px solid #eee1d7;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 10px 35px rgba(59, 41, 34, 0.10);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   LOGIN LOGO
+========================================================= */
+
+.login-logo {
+  width: 75px;
+  height: 75px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #f1dfd2;
+
+  overflow: hidden;
+}
+
+.login-logo img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+
+/* =========================================================
+   LOGIN HEADING
+========================================================= */
+
+.login-heading {
+  text-align: center;
+
+  margin-bottom: 28px;
+}
+
+.login-heading span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #c4773b;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.login-heading h1 {
+  margin: 0;
+
+  color: #3b2922;
+
+  font-size: 28px;
+}
+
+.login-heading p {
+  margin: 8px 0 0;
+
+  color: #8a7568;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.login-form {
+  width: 100%;
+}
+
+
+/* =========================================================
+   INPUT GROUP
+========================================================= */
+
+.login-input-group {
+  margin-bottom: 18px;
+}
+
+.login-input-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #3b2922;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.login-input-group input {
+  width: 100%;
+  height: 44px;
+
+  padding: 0 13px;
+
+  border: 1px solid #dfcbbd;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #fffdfb;
+
+  color: #3b2922;
+
+  font-size: 14px;
+
+  transition: 0.2s ease;
+}
+
+.login-input-group input:focus {
+  border-color: #c4773b;
+
+  box-shadow:
+    0 0 0 3px rgba(196, 119, 59, 0.10);
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.login-button {
+  width: 100%;
+  height: 45px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #3b2922;
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.login-button:hover {
+  background: #c4773b;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   REGISTER LINK
+========================================================= */
+
+.login-register {
+  margin-top: 22px;
+
+  text-align: center;
+
+  color: #8a7568;
+
+  font-size: 13px;
+}
+
+.login-register a {
+  color: #c4773b;
+
+  font-weight: 600;
+}
+
+.login-register a:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+
+  .login-page {
+    padding: 20px 15px;
+  }
+
+  .login-card {
+    padding: 28px 22px;
+
+    border-radius: 15px;
+  }
+
+  .login-heading h1 {
+    font-size: 25px;
+  }
+
+}

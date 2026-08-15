@@ -141,118 +141,6 @@
 
 
 /* =========================================================
-   CART ITEMS
-
-   These selectors cover common class names.
-   If your Cart.jsx uses different class names,
-   send me that file and I can match them exactly.
-========================================================= */
-
-.order-card .cart-item,
-.order-card .cart-product,
-.order-card .cart-card {
-  min-height: 70px;
-
-  padding: 10px 0;
-
-  display: flex;
-  align-items: center;
-
-  gap: 12px;
-
-  border-bottom: 1px solid #f0e3da;
-}
-
-
-/* =========================================================
-   CART IMAGE
-========================================================= */
-
-.order-card .cart-item img,
-.order-card .cart-product img,
-.order-card .cart-card img {
-  width: 58px;
-  height: 58px;
-
-  flex-shrink: 0;
-
-  object-fit: cover;
-
-  border-radius: 8px;
-}
-
-
-/* =========================================================
-   CART ITEM TEXT
-========================================================= */
-
-.order-card .cart-item h3,
-.order-card .cart-product h3,
-.order-card .cart-card h3 {
-  margin: 0;
-
-  color: #3b2922;
-
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.order-card .cart-item p,
-.order-card .cart-product p,
-.order-card .cart-card p {
-  margin: 4px 0 0;
-
-  color: #8a7568;
-
-  font-size: 12px;
-}
-
-
-/* =========================================================
-   QUANTITY CONTROLS
-========================================================= */
-
-.order-card .quantity-control,
-.order-card .quantity-controls {
-  display: flex;
-  align-items: center;
-
-  gap: 6px;
-}
-
-.order-card .quantity-control button,
-.order-card .quantity-controls button {
-  width: 26px;
-  height: 26px;
-
-  padding: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid #dfcbbd;
-
-  border-radius: 5px;
-
-  background: #fff8f2;
-
-  color: #6b4433;
-
-  font-size: 14px;
-
-  cursor: pointer;
-}
-
-.order-card .quantity-control button:hover,
-.order-card .quantity-controls button:hover {
-  background: #f1dfd2;
-
-  border-color: #c4773b;
-}
-
-
-/* =========================================================
    ORDER FOOTER
 ========================================================= */
 
@@ -347,20 +235,6 @@
 
 
 /* =========================================================
-   EMPTY CART
-========================================================= */
-
-.order-card:has(.empty-cart) {
-  min-height: 230px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-}
-
-
-/* =========================================================
    TABLET
 ========================================================= */
 
@@ -417,13 +291,6 @@
     padding: 14px;
 
     border-radius: 10px;
-  }
-
-  .order-card .cart-item img,
-  .order-card .cart-product img,
-  .order-card .cart-card img {
-    width: 50px;
-    height: 50px;
   }
 
   .order-footer {

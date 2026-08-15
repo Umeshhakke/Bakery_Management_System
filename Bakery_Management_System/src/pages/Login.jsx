@@ -7,6 +7,7 @@ import khari from "../assets/khari.jpg";
 import pav from "../assets/pav.jpg";
 import {getRequestHeader , API_URL} from "../utils/api";
 import logo from "../assets/logo.png";
+import "../styles/Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
