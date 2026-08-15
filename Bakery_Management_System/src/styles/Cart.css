@@ -1,0 +1,527 @@
+/* =========================================================
+   CART
+   Scoped specifically for Order Summary
+========================================================= */
+
+.order-summary-page .cart-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CART ITEMS
+========================================================= */
+
+.order-summary-page .cart-items {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* =========================================================
+   SINGLE PRODUCT ROW
+========================================================= */
+
+.order-summary-page .cart-item {
+  width: 100%;
+  min-height: 78px;
+
+  margin: 0;
+  padding: 12px 0;
+
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  border-bottom: 1px solid #ead9ce;
+
+  gap: 24px;
+}
+
+
+/* =========================================================
+   PRODUCT
+========================================================= */
+
+.order-summary-page .cart-product {
+  flex: 1 1 auto;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin: 0;
+  padding: 0;
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+.order-summary-page .cart-product-icon {
+  width: 70px;
+  height: 70px;
+
+  min-width: 70px;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+
+  border-radius: 9px;
+
+  background: #f5e9df;
+
+  box-sizing: border-box;
+}
+
+
+.order-summary-page .cart-product-icon img {
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+
+/* =========================================================
+   PRODUCT DETAILS
+========================================================= */
+
+.order-summary-page .cart-product-details {
+  min-width: 0;
+
+  margin: 0;
+  padding: 0;
+}
+
+
+.order-summary-page .cart-product-details h4 {
+  margin: 0 0 5px 0;
+  padding: 0;
+
+  color: #3b2922;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  line-height: 1.25;
+}
+
+
+.order-summary-page .cart-product-details p {
+  margin: 0;
+  padding: 0;
+
+  color: #8a7568;
+
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+
+.order-summary-page .quantity-controls {
+  width: 105px;
+
+  flex: 0 0 105px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  margin: 0;
+  padding: 0;
+}
+
+
+/* =========================================================
+   QUANTITY BUTTONS
+========================================================= */
+
+.order-summary-page .quantity-controls button {
+  width: 31px;
+  height: 31px;
+
+  min-width: 31px;
+
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #dfcbbd;
+  border-radius: 6px;
+
+  background: #fffaf6;
+
+  color: #6b4433;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+
+  transition: all 0.2s ease;
+}
+
+
+.order-summary-page .quantity-controls button:hover {
+  background: #f1dfd2;
+
+  border-color: #c4773b;
+
+  color: #3b2922;
+}
+
+
+/* =========================================================
+   QUANTITY NUMBER
+========================================================= */
+
+.order-summary-page .quantity-controls span {
+  width: 20px;
+  min-width: 20px;
+
+  margin: 0;
+  padding: 0;
+
+  display: block;
+
+  text-align: center;
+
+  color: #3b2922;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 31px;
+}
+
+
+/* =========================================================
+   SUBTOTAL
+========================================================= */
+
+.order-summary-page .cart-subtotal {
+  width: 105px;
+
+  flex: 0 0 105px;
+
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-end;
+  justify-content: center;
+
+  gap: 3px;
+
+  box-sizing: border-box;
+}
+
+
+.order-summary-page .cart-subtotal span {
+  margin: 0;
+  padding: 0;
+
+  color: #8a7568;
+
+  font-size: 11px;
+
+  line-height: 1.2;
+}
+
+
+.order-summary-page .cart-subtotal strong {
+  margin: 0;
+  padding: 0;
+
+  color: #3b2922;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   IMPORTANT
+   OLD CART TOTAL MUST NOT DISPLAY
+========================================================= */
+
+.order-summary-page .cart-total {
+  display: none !important;
+}
+
+
+/* =========================================================
+   EMPTY CART
+========================================================= */
+
+.order-summary-page .empty-cart {
+  width: 100%;
+  min-height: 200px;
+
+  margin: 0;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+
+.order-summary-page .empty-cart-icon {
+  width: 55px;
+  height: 55px;
+
+  margin: 0 0 12px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #f1dfd2;
+
+  font-size: 24px;
+}
+
+
+.order-summary-page .empty-cart h3 {
+  margin: 0;
+
+  color: #3b2922;
+
+  font-size: 17px;
+}
+
+
+.order-summary-page .empty-cart p {
+  margin: 6px 0 0;
+
+  color: #8a7568;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 750px) {
+
+  .order-summary-page .cart-item {
+    gap: 15px;
+  }
+
+  .order-summary-page .cart-product-icon {
+    width: 60px;
+    height: 60px;
+
+    min-width: 60px;
+  }
+
+  .order-summary-page .cart-product-details h4 {
+    font-size: 14px;
+  }
+
+  .order-summary-page .cart-product-details p {
+    font-size: 12px;
+  }
+
+  .order-summary-page .quantity-controls {
+    width: 90px;
+    flex-basis: 90px;
+  }
+
+  .order-summary-page .cart-subtotal {
+    width: 80px;
+    flex-basis: 80px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 550px) {
+
+  .order-summary-page .cart-item {
+    min-height: 70px;
+
+    padding: 10px 0;
+
+    gap: 8px;
+  }
+
+
+  .order-summary-page .cart-product {
+    gap: 9px;
+  }
+
+
+  .order-summary-page .cart-product-icon {
+    width: 50px;
+    height: 50px;
+
+    min-width: 50px;
+
+    border-radius: 7px;
+  }
+
+
+  .order-summary-page .cart-product-details h4 {
+    margin-bottom: 3px;
+
+    font-size: 13px;
+  }
+
+
+  .order-summary-page .cart-product-details p {
+    font-size: 11px;
+  }
+
+
+  .order-summary-page .quantity-controls {
+    width: 82px;
+    flex-basis: 82px;
+
+    gap: 4px;
+  }
+
+
+  .order-summary-page .quantity-controls button {
+    width: 27px;
+    height: 27px;
+
+    min-width: 27px;
+  }
+
+
+  .order-summary-page .quantity-controls span {
+    width: 16px;
+    min-width: 16px;
+
+    line-height: 27px;
+
+    font-size: 12px;
+  }
+
+
+  .order-summary-page .cart-subtotal {
+    width: 62px;
+    flex-basis: 62px;
+  }
+
+
+  .order-summary-page .cart-subtotal span {
+    font-size: 9px;
+  }
+
+
+  .order-summary-page .cart-subtotal strong {
+    font-size: 12px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .order-summary-page .cart-item {
+    gap: 5px;
+  }
+
+
+  .order-summary-page .cart-product-icon {
+    width: 44px;
+    height: 44px;
+
+    min-width: 44px;
+  }
+
+
+  .order-summary-page .cart-product {
+    gap: 6px;
+  }
+
+
+  .order-summary-page .cart-product-details h4 {
+    font-size: 12px;
+  }
+
+
+  .order-summary-page .quantity-controls {
+    width: 73px;
+    flex-basis: 73px;
+  }
+
+
+  .order-summary-page .quantity-controls button {
+    width: 24px;
+    height: 24px;
+
+    min-width: 24px;
+
+    font-size: 13px;
+  }
+
+
+  .order-summary-page .quantity-controls span {
+    width: 13px;
+    min-width: 13px;
+
+    line-height: 24px;
+  }
+
+
+  .order-summary-page .cart-subtotal {
+    width: 55px;
+    flex-basis: 55px;
+  }
+
+}

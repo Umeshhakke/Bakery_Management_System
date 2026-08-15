@@ -1,119 +1,276 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Header from "../components/Header";
+
+import "../styles/Order.css";
+
+
 function Order({ cart }) {
+
   const navigate = useNavigate();
+
+
+  // =========================================================
+  // FORM STATE
+  // =========================================================
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
 
-  const total = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+
+  // =========================================================
+  // CART COUNT
+  // =========================================================
+
+  const cartCount = cart.reduce(
+    (total, item) => total + item.quantity,
     0
   );
 
+
+  // =========================================================
+  // TOTAL
+  // =========================================================
+
+  const total = cart.reduce(
+    (sum, item) =>
+      sum + item.price * item.quantity,
+    0
+  );
+
+
+  // =========================================================
+  // SUBMIT ORDER
+  // =========================================================
+
   const handleSubmit = (e) => {
+
     e.preventDefault();
 
-    if (!name || !phone || !address) {
-      alert("Please fill all delivery details.");
+
+    // Empty cart
+    if (cart.length === 0) {
+
+      alert("Your cart is empty.");
+
+      navigate("/menu");
+
       return;
     }
 
-    if (phone.length !== 10) {
-      alert("Please enter a valid 10-digit phone number.");
+
+    // Required fields
+    if (!name.trim() || !phone || !address.trim()) {
+
+      alert(
+        "Please fill all delivery details."
+      );
+
       return;
     }
+
+
+    // Phone validation
+    if (phone.length !== 10) {
+
+      alert(
+        "Please enter a valid 10-digit phone number."
+      );
+
+      return;
+    }
+
+
+    // =======================================================
+    // ORDER DATA
+    // =======================================================
 
     const orderData = {
+
       customer: {
-        name: name,
+
+        name: name.trim(),
+
         phone: phone,
-        address: address,
+
+        address: address.trim(),
+
       },
 
+
       items: cart.map((item) => ({
+
         itemId: item.id,
+
         name: item.name,
+
         quantity: item.quantity,
+
         price: item.price,
+
       })),
 
+
       total: total,
+
     };
 
-    // Temporary: later your friend can connect this to the Java API.
-    console.log("ORDER DATA:", orderData);
 
-        alert("Order placed successfully! 🎉");
-         navigate("/menu");
+    // =======================================================
+    // TEMPORARY
+    // Later connect this to Java API
+    // =======================================================
+
+    console.log(
+      "ORDER DATA:",
+      orderData
+    );
+
+
+    alert(
+      "Order placed successfully! 🎉"
+    );
+
+
+    navigate("/menu");
+
   };
 
+
   return (
-    <div className="order-page">
 
-      <div className="order-container">
+    <div className="order-details-page">
 
-        {/* HEADER */}
 
-        <div className="order-header">
+      {/* =====================================================
+          COMMON HEADER
+      ====================================================== */}
+
+      <Header cartCount={cartCount} />
+
+
+      {/* =====================================================
+          MAIN CONTENT
+      ====================================================== */}
+
+      <main className="order-details-container">
+
+
+        {/* ===================================================
+            PAGE HEADING
+        ==================================================== */}
+
+        <section className="order-details-heading">
+
+          <div>
+
+            <span>
+              ORDER DETAILS
+            </span>
+
+            <h1>
+              Complete Your Order
+            </h1>
+
+            <p>
+              Just a few details and your favourite treats
+              will be ready.
+            </p>
+
+          </div>
+
 
           <button
-            className="back-button"
+            className="back-cart-button"
             onClick={() => navigate("/order")}
           >
             ← Back to Cart
           </button>
 
-          <span>ORDER DETAILS</span>
+        </section>
 
-          <h1>Complete Your Order</h1>
 
-          <p>
-            Just a few details and your favourite treats
-            will be ready.
-          </p>
-
-        </div>
-
+        {/* ===================================================
+            CONTENT
+        ==================================================== */}
 
         <div className="order-content">
 
-          {/* CUSTOMER DETAILS */}
 
-          <div className="customer-card">
+          {/* =================================================
+              CUSTOMER DETAILS
+          ================================================== */}
 
-            <h2>👤 Customer Details</h2>
+          <section className="customer-card">
+
+            <div className="card-heading">
+
+              <div className="card-heading-icon">
+                👤
+              </div>
+
+              <div>
+
+                <h2>
+                  Customer Details
+                </h2>
+
+                <p>
+                  Enter your delivery information
+                </p>
+
+              </div>
+
+            </div>
+
 
             <form onSubmit={handleSubmit}>
 
+
+              {/* FULL NAME */}
+
               <div className="order-input-group">
 
-                <label>Full Name</label>
+                <label htmlFor="name">
+                  Full Name
+                </label>
 
                 <input
+                  id="name"
                   type="text"
                   placeholder="Enter your full name"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) =>
+                    setName(e.target.value)
+                  }
                 />
 
               </div>
 
 
+              {/* PHONE */}
+
               <div className="order-input-group">
 
-                <label>Phone Number</label>
+                <label htmlFor="phone">
+                  Phone Number
+                </label>
 
                 <input
+                  id="phone"
                   type="tel"
+                  inputMode="numeric"
                   placeholder="Enter 10-digit phone number"
                   value={phone}
-                  maxLength="10"
+                  maxLength={10}
                   onChange={(e) =>
                     setPhone(
-                      e.target.value.replace(/\D/g, "")
+                      e.target.value.replace(
+                        /\D/g,
+                        ""
+                      )
                     )
                   }
                 />
@@ -121,51 +278,103 @@ function Order({ cart }) {
               </div>
 
 
+              {/* ADDRESS */}
+
               <div className="order-input-group">
 
-                <label>Delivery Address</label>
+                <label htmlFor="address">
+                  Delivery Address
+                </label>
 
                 <textarea
+                  id="address"
                   placeholder="Enter your complete delivery address"
                   value={address}
                   onChange={(e) =>
                     setAddress(e.target.value)
                   }
-                  rows="4"
+                  rows={4}
                 />
 
               </div>
 
 
+              {/* SUBMIT */}
+
               <button
                 type="submit"
                 className="submit-order-button"
               >
-                Submit Order
-                <span>→</span>
+
+                <span>
+                  Place Order
+                </span>
+
+                <span className="submit-arrow">
+                  →
+                </span>
+
               </button>
 
             </form>
 
-          </div>
+          </section>
 
 
-          {/* ORDER SUMMARY */}
+          {/* =================================================
+              ORDER SUMMARY
+          ================================================== */}
 
-          <div className="order-items-card">
+          <section className="order-items-card">
 
-            <h2>🛒 Your Order</h2>
+
+            <div className="card-heading">
+
+              <div className="card-heading-icon">
+                🛒
+              </div>
+
+              <div>
+
+                <h2>
+                  Your Order
+                </h2>
+
+                <p>
+                  {cartCount} item
+                  {cartCount !== 1 ? "s" : ""}
+                </p>
+
+              </div>
+
+            </div>
+
+
+            {/* =================================================
+                EMPTY CART
+            ================================================== */}
 
             {cart.length === 0 ? (
 
               <div className="order-empty">
 
-                <div>🛒</div>
+                <div className="empty-cart-icon">
+                  🛒
+                </div>
 
-                <p>Your cart is empty.</p>
+                <h3>
+                  Your cart is empty
+                </h3>
+
+                <p>
+                  Add some delicious treats before
+                  placing your order.
+                </p>
 
                 <button
-                  onClick={() => navigate("/")}
+                  onClick={() =>
+                    navigate("/menu")
+                  }
                 >
                   Browse Menu
                 </button>
@@ -176,35 +385,80 @@ function Order({ cart }) {
 
               <>
 
-                 {cart.map((item) => (
-                 <div className="order-product" key={item.id}>
-                    <img
-                        src={item.image}
-                        alt={item.name}
-                        className="order-product-image"
-                    />
+                {/* =================================================
+                    PRODUCTS
+                ================================================== */}
 
-                    <div className="order-product-info">
-                        <h3>{item.name}</h3>
+                <div className="order-products">
+
+                  {cart.map((item) => (
+
+                    <div
+                      className="order-product"
+                      key={item.id}
+                    >
+
+
+                      {/* IMAGE */}
+
+                      <div className="order-product-image-wrapper">
+
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="order-product-image"
+                        />
+
+                      </div>
+
+
+                      {/* PRODUCT INFO */}
+
+                      <div className="order-product-info">
+
+                        <h3>
+                          {item.name}
+                        </h3>
+
                         <p>
-                        ₹{item.price} × {item.quantity}
+                          ₹{item.price} ×{" "}
+                          {item.quantity}
                         </p>
+
+                      </div>
+
+
+                      {/* ITEM TOTAL */}
+
+                      <strong className="order-product-total">
+
+                        ₹
+                        {(
+                          item.price *
+                          item.quantity
+                        ).toFixed(2)}
+
+                      </strong>
+
                     </div>
 
-                    <strong>
-                        ₹{item.price * item.quantity}
-                    </strong>
-                    </div>
+                  ))}
 
-                ))}
+                </div>
 
+
+                {/* =================================================
+                    TOTAL
+                ================================================== */}
 
                 <div className="order-total">
 
-                  <span>Total</span>
+                  <span>
+                    Total Amount
+                  </span>
 
                   <strong>
-                    ₹{total}
+                    ₹{total.toFixed(2)}
                   </strong>
 
                 </div>
@@ -213,13 +467,14 @@ function Order({ cart }) {
 
             )}
 
-          </div>
+          </section>
 
         </div>
 
-      </div>
+      </main>
 
     </div>
+
   );
 }
 

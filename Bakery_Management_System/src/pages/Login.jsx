@@ -6,6 +6,7 @@ import cupcake from "../assets/cupcake.jpg";
 import khari from "../assets/khari.jpg";
 import pav from "../assets/pav.jpg";
 import {getRequestHeader , API_URL} from "../utils/api";
+import logo from "../assets/logo.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -76,9 +77,7 @@ function Login() {
 
         <div className="visual-content">
 
-          <div className="bakery-logo">
-            🥐 Sweet Crust
-          </div>
+         
 
           <div className="visual-text">
 
@@ -139,15 +138,27 @@ function Login() {
         <div className="login-box">
 
           <div className="mobile-logo">
-            🥐 Sweet Crust
+             Shakti Urja
           </div>
 
           <div className="login-heading">
-
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <img
+                src={logo}
+                                alt=""
+                                id="logo"
+                                style={{
+                                  width: "100%",
+                                  maxWidth: "200px",
+                                  height: "auto",
+                                  display: "block",
+                                  margin: "0 auto"
+                                }}
+              />
+            </div>
             <span>
               WELCOME BACK
             </span>
-
             <h2>
               Login to your account
             </h2>

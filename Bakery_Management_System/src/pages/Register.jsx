@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { getRequestHeader , API_URL } from "../utils/api";
+import logo from "../assets/logo.png";
 
 function Register() {
   const navigate = useNavigate();
@@ -81,12 +82,25 @@ function Register() {
       <div className="register-visual">
 
         <div className="register-brand">
-          🥐 Sweet Crust
+           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <img
+                src={logo}
+                alt=""
+                id="logo"
+                style={{
+                  width: "100%",
+                  maxWidth: "200px",
+                  height: "auto",
+                  display: "block",
+                  margin: "0 auto"
+                }}
+              />
+            </div>
         </div>
 
         <div className="register-message">
 
-          <span>WELCOME TO SWEET CRUST</span>
+          <span>WELCOME TO Shakti Urja</span>
 
           <h1>
             Your favourite
@@ -118,7 +132,7 @@ function Register() {
         <div className="register-box">
 
           <div className="register-mobile-logo">
-            🥐 Sweet Crust
+            🥐 Shakti Urja
           </div>
 
           <div className="register-heading">
@@ -128,7 +142,7 @@ function Register() {
             <h2>Create your account</h2>
 
             <p>
-              Join Sweet Crust and order your
+              Join Shakti Urja and order your
               favourite treats with ease.
             </p>
 

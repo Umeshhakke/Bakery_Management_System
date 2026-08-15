@@ -1,60 +1,101 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import Cart from "../components/Cart";
+import Header from "../components/Header";
+
+import "../styles/OrderSummary.css";
+
 
 function OrderSummary({
   cart,
   increaseQuantity,
   decreaseQuantity,
 }) {
+
   const navigate = useNavigate();
 
-  const total = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+
+  // =========================================================
+  // CART COUNT
+  // =========================================================
+
+  const cartCount = cart.reduce(
+    (total, item) => total + item.quantity,
     0
   );
 
+
+  // =========================================================
+  // TOTAL
+  // =========================================================
+
+  const total = cart.reduce(
+    (sum, item) =>
+      sum + item.price * item.quantity,
+    0
+  );
+
+
   return (
-    <div className="page">
 
-      {/* HEADER */}
-      <header className="header">
+    <div className="order-summary-page">
 
-        <div className="brand">
 
-          <div className="brand-icon">
-            🥐
-          </div>
+      {/* =====================================================
+          COMMON HEADER
+      ====================================================== */}
+
+      <Header cartCount={cartCount} />
+
+
+      {/* =====================================================
+          ORDER CONTENT
+      ====================================================== */}
+
+      <main className="order-page">
+
+
+        {/* ===================================================
+            PAGE HEADING
+        ==================================================== */}
+
+        <div className="order-page-heading">
 
           <div>
-            <h1>Sweet Crust</h1>
-            <p>Your selected treats</p>
+
+            <span>
+              YOUR ORDER
+            </span>
+
+            <h1>
+              Order Summary
+            </h1>
+
+            <p>
+              Review your selected treats before continuing.
+            </p>
+
           </div>
+
+
+          <button
+            className="back-menu-button"
+            onClick={() => navigate("/menu")}
+          >
+             Back to Menu
+          </button>
 
         </div>
 
-        {/* BACK TO MENU */}
-        <Link to="/" className="back-button">
-          ← Back to Menu
-        </Link>
 
-      </header>
+        {/* ===================================================
+            ORDER CARD
+        ==================================================== */}
+
+        <section className="order-card">
 
 
-      {/* ORDER SUMMARY */}
-      <main className="order-page">
-
-        <div className="order-card">
-
-          <div className="order-title">
-
-            <span>YOUR ORDER</span>
-
-            <h2>
-              🛒 Order Summary
-            </h2>
-
-          </div>
-
+          {/* CART */}
 
           <Cart
             cart={cart}
@@ -63,22 +104,49 @@ function OrderSummary({
           />
 
 
-          {/* CONTINUE BUTTON */}
+          {/* =================================================
+              ORDER FOOTER
+          ================================================== */}
 
           {cart.length > 0 && (
-            <button
-              className="continue-order-button"
-              onClick={() => navigate("/order-details")}
-            >
-              Continue to Order Details →
-            </button>
+
+            <div className="order-footer">
+
+
+              <div className="order-total">
+
+                <span>
+                  Total Amount
+                </span>
+
+                <strong>
+                  ₹{total.toFixed(2)}
+                </strong>
+
+              </div>
+
+
+              <button
+                className="continue-order-button"
+                onClick={() =>
+                  navigate("/order-details")
+                }
+              >
+                Continue to Order Details
+                <span>→</span>
+              </button>
+
+            </div>
+
           )}
 
-        </div>
+        </section>
+
 
       </main>
 
     </div>
+
   );
 }
 

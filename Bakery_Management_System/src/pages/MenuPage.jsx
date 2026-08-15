@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import Menu from "../components/Menu";
+import Header from "../components/Header";
 
 function MenuPage({ addToCart, cart }) {
 
@@ -11,43 +11,8 @@ function MenuPage({ addToCart, cart }) {
   return (
     <div className="app">
 
-      {/* HEADER */}
-      <header className="header">
+      <Header cartCount={cartCount} />
 
-        <div className="brand">
-
-          <div className="brand-icon">
-            🥐
-          </div>
-
-          <div>
-            <h1>Sweet Crust</h1>
-            <p>Fresh from our oven to your table</p>
-          </div>
-
-        </div>
-
-        {/* CART BUTTON */}
-         <div className="header-actions">
-
-         <Link to="/profile" className="profile-button">
-          👤 Profile
-         </Link>
-
-         <Link to="/order" className="cart-button">
-          🛒 Cart
-
-           <span>
-            {cartCount}
-           </span>
-        </Link>
-
-       </div>
-
-      </header>
-
-
-      {/* MENU */}
       <main className="menu-page">
 
         <div className="section-heading">

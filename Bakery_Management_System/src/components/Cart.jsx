@@ -3,12 +3,6 @@ function Cart({
   increaseQuantity,
   decreaseQuantity,
 }) {
-  const total = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
-  // Empty cart
   if (cart.length === 0) {
     return (
       <div className="empty-cart">
@@ -26,7 +20,6 @@ function Cart({
   return (
     <div className="cart-container">
 
-      {/* CART ITEMS */}
       <div className="cart-items">
 
         {cart.map((item) => (
@@ -35,7 +28,7 @@ function Cart({
             className="cart-item"
           >
 
-            {/* PRODUCT INFO */}
+            {/* PRODUCT */}
             <div className="cart-product">
 
               <div className="cart-product-icon">
@@ -45,12 +38,16 @@ function Cart({
                 />
               </div>
 
-              <div>
-                <h4>{item.name}</h4>
+              <div className="cart-product-details">
+
+                <h4>
+                  {item.name}
+                </h4>
 
                 <p>
                   ₹{item.price} each
                 </p>
+
               </div>
 
             </div>
@@ -60,9 +57,8 @@ function Cart({
             <div className="quantity-controls">
 
               <button
-                onClick={() =>
-                  decreaseQuantity(item.id)
-                }
+                type="button"
+                onClick={() => decreaseQuantity(item.id)}
               >
                 −
               </button>
@@ -72,9 +68,8 @@ function Cart({
               </span>
 
               <button
-                onClick={() =>
-                  increaseQuantity(item.id)
-                }
+                type="button"
+                onClick={() => increaseQuantity(item.id)}
               >
                 +
               </button>
@@ -90,27 +85,13 @@ function Cart({
               </span>
 
               <strong>
-                ₹{item.price * item.quantity}
+                ₹{(item.price * item.quantity).toFixed(2)}
               </strong>
 
             </div>
 
           </div>
         ))}
-
-      </div>
-
-
-      {/* TOTAL */}
-      <div className="cart-total">
-
-        <div className="total-label">
-          <span>Total Amount</span>
-
-          <strong>
-            ₹{total}
-          </strong>
-        </div>
 
       </div>
 
