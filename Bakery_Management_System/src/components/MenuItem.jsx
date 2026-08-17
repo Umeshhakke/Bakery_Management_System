@@ -17,7 +17,10 @@ function MenuItem({ item, addToCart }) {
 
       {/* Product Information */}
       <div className="product-info">
-        <h3>{item.name}</h3>
+        <h3 style={{ margin: "0 0 0.2rem" }}>{item.name}</h3>
+        <p className="product-unit" style={{ color: "#7f8c8d", fontSize: "0.85rem", margin: "0 0 0.8rem" }}>
+          {item.unit || "1 pc"}
+        </p>
 
         <div className="product-bottom">
           <span className="product-price">

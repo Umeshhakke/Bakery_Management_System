@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../components/Header";
+import { getRequestHeader, API_URL } from "../utils/api";
 
 import "../styles/Order.css";
 
 
-function Order({ cart }) {
+function Order({ cart, clearCart }) {
 
   const navigate = useNavigate();
 
@@ -14,10 +15,12 @@ function Order({ cart }) {
   // =========================================================
   // FORM STATE
   // =========================================================
+  
+  const savedUser = JSON.parse(localStorage.getItem("user")) || {};
 
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [name, setName] = useState(savedUser.name || "");
+  const [phone, setPhone] = useState(savedUser.phone || "");
+  const [address, setAddress] = useState(savedUser.address || "");
 
 
   // =========================================================
@@ -119,23 +122,27 @@ function Order({ cart }) {
 
 
     // =======================================================
-    // TEMPORARY
-    // Later connect this to Java API
+    // SEND TO API
     // =======================================================
-
-    console.log(
-      "ORDER DATA:",
-      orderData
-    );
-
-
-    alert(
-      "Order placed successfully! 🎉"
-    );
-
-
-    navigate("/menu");
-
+    
+    fetch(`${API_URL}/orders`, {
+      method: "POST",
+      headers: getRequestHeader(true),
+      body: JSON.stringify(orderData)
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to place order.");
+        return res.json();
+      })
+      .then(data => {
+        alert("Order placed successfully! 🎉");
+        if (clearCart) clearCart();
+        navigate("/menu");
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Failed to place order.");
+      });
   };
 
 

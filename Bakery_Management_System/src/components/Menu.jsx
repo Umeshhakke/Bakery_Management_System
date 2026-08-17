@@ -1,9 +1,28 @@
-import { useState } from "react";
-import bakeryItems from "../data/bakeryData";
+import { useState, useEffect } from "react";
 import MenuItem from "./MenuItem";
 
-function Menu({ addToCart }) {
+function Menu({ addToCart, searchTerm }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [dbProducts, setDbProducts] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/products")
+      .then((res) => res.json())
+      .then((data) => {
+        // Map db products to match front-end structure
+        const formattedProducts = data.map((item) => ({
+          id: item._id, // Use _id from MongoDB as id
+          name: item.name,
+          category: item.category || "Cakes",
+          price: item.price,
+          image: item.image || "https://via.placeholder.com/150",
+          quantity: item.quantity,
+          unit: item.unit || "1 pc"
+        }));
+        setDbProducts(formattedProducts);
+      })
+      .catch((err) => console.error("Error fetching products:", err));
+  }, []);
 
   const categories = [
     "All",
@@ -11,14 +30,14 @@ function Menu({ addToCart }) {
     "Biscuits",
     "Khari",
     "Breads & Buns",
+    "Others"
   ];
 
-  const filteredItems =
-    selectedCategory === "All"
-      ? bakeryItems
-      : bakeryItems.filter(
-          (item) => item.category === selectedCategory
-        );
+  const filteredItems = dbProducts.filter((item) => {
+    const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
+    const matchesSearch = !searchTerm || item.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "../styles/Header.css";
 
-function Header({ cartCount }) {
+function Header({ cartCount, searchTerm, setSearchTerm }) {
   return (
     <header className="main-header">
 
@@ -25,6 +25,8 @@ function Header({ cartCount }) {
           <input
             type="text"
             placeholder="Search for cakes, pastries, breads..."
+            value={searchTerm !== undefined ? searchTerm : ""}
+            onChange={(e) => setSearchTerm && setSearchTerm(e.target.value)}
           />
 
           <button type="button" aria-label="Search">

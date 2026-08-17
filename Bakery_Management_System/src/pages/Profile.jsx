@@ -95,6 +95,45 @@ function Profile() {
   const orders = [];
 
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({ name: "", phone: "", address: "" });
+
+  const handleEditChange = (e) => {
+    setEditForm({ ...editForm, [e.target.name]: e.target.value });
+  };
+
+  const startEditing = () => {
+    setEditForm({
+      name: user?.name || "",
+      phone: user?.phone || "",
+      address: user?.address || ""
+    });
+    setIsEditing(true);
+  };
+
+  const handleProfileUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${API_URL}/profile`, {
+        method: "PUT",
+        headers: getRequestHeader(true),
+        body: JSON.stringify(editForm)
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data.user);
+        setIsEditing(false);
+        const cachedUser = JSON.parse(localStorage.getItem("user")) || {};
+        localStorage.setItem("user", JSON.stringify({ ...cachedUser, ...data.user }));
+      } else {
+        alert("Failed to update profile");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error updating profile");
+    }
+  };
+
   // =========================================================
   // LOADING
   // =========================================================

@@ -11,6 +11,7 @@ const bakeryItems = [
     name: "Chocolate Cake",
     category: "Cakes",
     price: 450,
+    unit: "1 whole cake (1 kg)",
     image: cake,
   },
   {
@@ -18,6 +19,7 @@ const bakeryItems = [
     name: "Vanilla Cupcake",
     category: "Cakes",
     price: 80,
+    unit: "1 box of 2 pcs",
     image: cupcake,
   },
   {
@@ -25,6 +27,7 @@ const bakeryItems = [
     name: "Choco Chip Biscuits",
     category: "Biscuits",
     price: 90,
+    unit: "1 pack of 250gm",
     image: biscuits,
   },
   {
@@ -32,6 +35,7 @@ const bakeryItems = [
     name: "Crispy Khari",
     category: "Khari",
     price: 120,
+    unit: "1 pack of 200gm",
     image: khari,
   },
   {
@@ -39,6 +43,7 @@ const bakeryItems = [
     name: "Mawa Cake",
     category: "Cakes",
     price: 150,
+    unit: "1 pc of 500gm",
     image: mava_cake,
   },
   {
@@ -46,6 +51,7 @@ const bakeryItems = [
     name: "Fresh Pav",
     category: "Breads & Buns",
     price: 100,
+    unit: "1 pack of 6 pcs",
     image: pav,
   },
 ];

@@ -1,7 +1,9 @@
+import { useState } from "react";
 import Menu from "../components/Menu";
 import Header from "../components/Header";
 
 function MenuPage({ addToCart, cart }) {
+  const [searchTerm, setSearchTerm] = useState("");
 
   const cartCount = cart.reduce(
     (total, item) => total + item.quantity,
@@ -11,7 +13,7 @@ function MenuPage({ addToCart, cart }) {
   return (
     <div className="app">
 
-      <Header cartCount={cartCount} />
+      <Header cartCount={cartCount} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
       <main className="menu-page">
 
@@ -25,7 +27,7 @@ function MenuPage({ addToCart, cart }) {
 
         </div>
 
-        <Menu addToCart={addToCart} />
+        <Menu addToCart={addToCart} searchTerm={searchTerm} />
 
       </main>
 

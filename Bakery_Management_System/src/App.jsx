@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
@@ -9,9 +9,27 @@ import MenuPage from "./pages/MenuPage";
 import OrderSummary from "./pages/OrderSummary";
 import Profile from "./pages/Profile";
 import Order from "./pages/Order";
+import AdminLogin from "./pages/Admin/AdminLogin";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminProducts from "./pages/Admin/AdminProducts";
+import AdminUsers from "./pages/Admin/AdminUsers";
+import AdminOrders from "./pages/Admin/AdminOrders";
+import DeliveryLogin from "./pages/Delivery/DeliveryLogin";
+import DeliveryRegister from "./pages/Delivery/DeliveryRegister";
+import DeliveryDashboard from "./pages/Delivery/DeliveryDashboard";
+import UserOrderDetails from "./pages/UserOrderDetails";
 
 function App() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("bakeryCart");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("bakeryCart", JSON.stringify(cart));
+  }, [cart]);
+
+  const clearCart = () => setCart([]);
 
   // ADD TO CART
   const addToCart = (item) => {
@@ -114,12 +132,51 @@ function App() {
         path="/profile"
         element={<Profile />}
       />
+        <Route
+          path="/my-orders/:id"
+          element={<UserOrderDetails />}
+        />
+        {/* ADMIN ROUTES */}
+        <Route
+          path="/admin/login"
+          element={<AdminLogin />}
+        />
+        <Route
+          path="/admin/dashboard"
+          element={<AdminDashboard />}
+        />
+        <Route
+          path="/admin/products"
+          element={<AdminProducts />}
+        />
+        <Route
+          path="/admin/users"
+          element={<AdminUsers />}
+        />
+        <Route
+          path="/admin/orders"
+          element={<AdminOrders />}
+        />
+        {/* DELIVERY ROUTES */}
+        <Route
+          path="/delivery/login"
+          element={<DeliveryLogin />}
+        />
+        <Route
+          path="/delivery/register"
+          element={<DeliveryRegister />}
+        />
+        <Route
+          path="/delivery/dashboard"
+          element={<DeliveryDashboard />}
+        />
         {/* ORDER DETAILS */}
         <Route
           path="/order-details"
           element={
             <Order
               cart={cart}
+              clearCart={clearCart}
             />
           }
         />

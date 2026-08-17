@@ -28,6 +28,14 @@ const UserSchema = new mongoose.Schema({
     },
     address:{
         type:String
+    },
+    isAdmin:{
+        type:Boolean,
+        default:false
+    },
+    isDeliveryPerson: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 

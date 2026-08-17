@@ -11,6 +11,17 @@ const ProductsSchema = new mongoose.Schema({
     price:{
         type:Number,
         required:[true , "Enter the product price"],
+    },
+    category:{
+        type:String,
+        default: "All"
+    },
+    unit:{
+        type:String,
+        default: "1 pc"
+    },
+    image:{
+        type:String
     }
 },{timestamps:true});
 
