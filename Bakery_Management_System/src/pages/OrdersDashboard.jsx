@@ -59,20 +59,23 @@ function OrdersDashboard() {
 
   if (loading) {
     return (
-      <div className="orders-dashboard">
+      <div className="orders-page-wrapper">
         <Header cartCount={0} />
-        <div className="orders-loading">
-          <div className="loading-spinner"></div>
-          <h2>Loading orders...</h2>
-          <p>Fetching your orders.</p>
+        <div className="orders-dashboard">
+          <div className="orders-loading">
+            <div className="loading-spinner"></div>
+            <h2>Loading orders...</h2>
+            <p>Fetching your orders.</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="orders-dashboard">
+    <div className="orders-page-wrapper">
       <Header cartCount={0} />
+      <div className="orders-dashboard">
 
       {/* =========================
           HEADER
@@ -362,6 +365,7 @@ function OrdersDashboard() {
 
       )}
 
+    </div>
     </div>
   );
 }
