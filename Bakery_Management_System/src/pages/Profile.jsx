@@ -66,6 +66,15 @@ function Profile() {
 
         setUser(data.user);
 
+        const ordersRes = await fetch(`${API_URL}/orders/myorders`, {
+          method: "GET",
+          headers: getRequestHeader(true)
+        });
+        if (ordersRes.ok) {
+          const ordersData = await ordersRes.json();
+          setOrders(ordersData);
+        }
+
       } catch (err) {
 
         console.error("Profile Error:", err);
@@ -92,7 +101,7 @@ function Profile() {
   // TEMPORARY ORDER HISTORY
   // =========================================================
 
-  const orders = [];
+  const [orders, setOrders] = useState([]);
 
 
   const [isEditing, setIsEditing] = useState(false);
@@ -319,23 +328,7 @@ function Profile() {
               </div>
 
 
-              <button
-                type="button"
-                className="edit-profile-button"
-                onClick={() =>
-                  alert(
-                    "Edit profile will be connected with the backend later."
-                  )
-                }
-              >
-
-                <span>
-                  ✎
-                </span>
-
-                Edit Profile
-
-              </button>
+              <button type="button" className="edit-profile-button" onClick={startEditing}><span>✎</span> Edit Profile</button>
 
             </div>
 
@@ -559,7 +552,7 @@ function Profile() {
 
                 <div
                   className="order-history-card"
-                  key={order.id}
+                  key={order._id}
                 >
 
                   <div className="order-history-main">
@@ -574,7 +567,7 @@ function Profile() {
                       <div className="order-id-row">
 
                         <h3>
-                          {order.id}
+                          {order._id}
                         </h3>
 
                         <span className="order-status">
@@ -585,12 +578,12 @@ function Profile() {
 
 
                       <p className="order-date">
-                        Ordered on {order.date}
+                        Ordered on {new Date(order.createdAt).toLocaleDateString()}
                       </p>
 
 
                       <p className="order-items">
-                        {order.items}
+                        {order.items.length} items
                       </p>
 
                     </div>
@@ -618,7 +611,7 @@ function Profile() {
                       className="view-order-button"
                       onClick={() =>
                         alert(
-                          `Order details for ${order.id} will be connected later.`
+                          `Order details for ${order._id} will be connected later.`
                         )
                       }
                     >
@@ -639,9 +632,33 @@ function Profile() {
 
       </main>
 
-    </div>
 
+      {isEditing && (
+        <div className="profile-modal" style={{position:'fixed', top:0, left:0, width:'100%', height:'100%', background:'rgba(0,0,0,0.5)', display:'flex', justifyContent:'center', alignItems:'center'}}>
+          <div className="profile-modal-content" style={{background:'white', padding:'20px', borderRadius:'8px', width:'400px'}}>
+            <h2>Edit Profile</h2>
+            <form onSubmit={handleProfileUpdate}>
+              <div className="form-group" style={{marginBottom:'10px'}}>
+                <label style={{display:'block', marginBottom:'5px'}}>Name</label>
+                <input type="text" name="name" value={editForm.name} onChange={handleEditChange} required style={{width:'100%', padding:'8px'}} />
+              </div>
+              <div className="form-group" style={{marginBottom:'10px'}}>
+                <label style={{display:'block', marginBottom:'5px'}}>Phone</label>
+                <input type="text" name="phone" value={editForm.phone} onChange={handleEditChange} required style={{width:'100%', padding:'8px'}} />
+              </div>
+              <div className="form-group" style={{marginBottom:'20px'}}>
+                <label style={{display:'block', marginBottom:'5px'}}>Address</label>
+                <textarea name="address" value={editForm.address} onChange={handleEditChange} required style={{width:'100%', padding:'8px'}} />
+              </div>
+              <div className="modal-actions" style={{display:'flex', justifyContent:'flex-end', gap:'10px'}}>
+                <button type="button" className="cancel-btn" onClick={() => setIsEditing(false)} style={{padding:'8px 16px'}}>Cancel</button>
+                <button type="submit" className="save-btn" style={{padding:'8px 16px', background:'#3498db', color:'white', border:'none'}}>Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
-
 export default Profile;
