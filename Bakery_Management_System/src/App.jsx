@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -14,7 +14,6 @@ import MenuPage from "./pages/MenuPage";
 import OrderSummary from "./pages/OrderSummary";
 import Profile from "./pages/Profile";
 import Order from "./pages/Order";
-<<<<<<< HEAD
 import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminProducts from "./pages/Admin/AdminProducts";
@@ -24,6 +23,7 @@ import DeliveryLogin from "./pages/Delivery/DeliveryLogin";
 import DeliveryRegister from "./pages/Delivery/DeliveryRegister";
 import DeliveryDashboard from "./pages/Delivery/DeliveryDashboard";
 import UserOrderDetails from "./pages/UserOrderDetails";
+import OrdersDashboard from "./pages/OrdersDashboard";
 
 function App() {
   const [cart, setCart] = useState(() => {
@@ -36,13 +36,6 @@ function App() {
   }, [cart]);
 
   const clearCart = () => setCart([]);
-=======
-import OrdersDashboard from "./pages/OrdersDashboard";
-
-function App() {
-
-  const [cart, setCart] = useState([]);
->>>>>>> 1198d52715cd20ef3f694499797498e787ec1360
 
 
   // =====================================================
@@ -182,7 +175,6 @@ function App() {
           }
         />
 
-<<<<<<< HEAD
          <Route
         path="/profile"
         element={<Profile />}
@@ -226,23 +218,6 @@ function App() {
           element={<DeliveryDashboard />}
         />
         {/* ORDER DETAILS */}
-=======
-
-        {/* =============================================
-            PROFILE
-        ============================================== */}
-
-        <Route
-          path="/profile"
-          element={<Profile />}
-        />
-
-
-        {/* =============================================
-            ORDER DETAILS
-        ============================================== */}
-
->>>>>>> 1198d52715cd20ef3f694499797498e787ec1360
         <Route
           path="/order-details"
           element={
