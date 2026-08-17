@@ -18,6 +18,7 @@ connectDB();
 const RegisterUser = require("./routes/Register");
 const {protect} = require("./middleware/authMiddleware");
 const Profile = require("./routes/Profile");
+<<<<<<< HEAD
 const ProductsRoute = require("./routes/Products");
 const AdminUsersRoute = require("./routes/AdminUsers");
 const OrdersRoute = require("./routes/Orders");
@@ -28,9 +29,18 @@ app.use('/api/profile',protect,Profile);
 app.use('/api/products',ProductsRoute);
 app.use('/api/admin/users', AdminUsersRoute);
 app.use('/api/orders', OrdersRoute);
+=======
+const Order = require("./routes/Order");
 
-app.listen(process.env.PORT || 5000 , ()=>{
-    console.log(`Server started at port localhost:${process.env.PORT}`);
 
+app.use(express.json());
+app.use('/api/auth',RegisterUser);
+app.use('/api/profile',protect,Profile)
+app.use("/api/orders", Order);
+>>>>>>> 1198d52715cd20ef3f694499797498e787ec1360
 
-})
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server started at port localhost:${PORT}`);
+});
