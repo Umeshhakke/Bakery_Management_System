@@ -1,3 +1,4 @@
+import { API_URL } from "../../utils/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +19,7 @@ function DeliveryProfile() {
 
   const fetchProfile = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/profile", {
+      const res = await fetch(`${API_URL}/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.ok) {
@@ -42,7 +43,7 @@ function DeliveryProfile() {
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/profile", {
+      const res = await fetch(`${API_URL}/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

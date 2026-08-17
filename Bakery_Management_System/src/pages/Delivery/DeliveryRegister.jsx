@@ -1,3 +1,4 @@
+import { API_URL } from "../../utils/api";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -19,7 +20,7 @@ function DeliveryRegister() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/auth/register-delivery", {
+      const res = await fetch(`${API_URL}/auth/register-delivery`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

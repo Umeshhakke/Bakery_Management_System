@@ -1,3 +1,4 @@
+import { API_URL } from "../../utils/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/AdminSidebar";
@@ -16,8 +17,8 @@ function AdminDashboard() {
     const fetchData = async () => {
       try {
         const [prodRes, userRes] = await Promise.all([
-          fetch("http://localhost:5000/api/products"),
-          fetch("http://localhost:5000/api/admin/users", {
+          fetch(`${API_URL}/products`),
+          fetch(`${API_URL}/admin/users`, {
             headers: { Authorization: `Bearer ${token}` }
           })
         ]);

@@ -1,3 +1,4 @@
+import { API_URL } from "../../utils/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +28,7 @@ function DeliveryDashboard() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/orders/delivery", {
+      const res = await fetch(`${API_URL}/orders/delivery`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.ok) {
@@ -41,7 +42,7 @@ function DeliveryDashboard() {
 
   const updateOrder = async (id, updates) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${id}/status`, {
+      const res = await fetch(`${API_URL}/orders/${id}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +62,7 @@ function DeliveryDashboard() {
     if (!selectedOrder) return;
     const finalIssueString = `${issueReason}: ${issueDetails}`;
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${selectedOrder._id}/issue`, {
+      const res = await fetch(`${API_URL}/orders/${selectedOrder._id}/issue`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

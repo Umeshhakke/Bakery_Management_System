@@ -1,3 +1,4 @@
+import { API_URL } from "../../utils/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/AdminSidebar";
@@ -19,7 +20,7 @@ function AdminOrders() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/orders", {
+      const res = await fetch(`${API_URL}/orders`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -31,7 +32,7 @@ function AdminOrders() {
 
   const fetchDeliveryStaff = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/orders/delivery-personnel", {
+      const res = await fetch(`${API_URL}/orders/delivery-personnel`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -43,7 +44,7 @@ function AdminOrders() {
 
   const confirmOrder = async (orderId) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${orderId}/confirm`, {
+      const res = await fetch(`${API_URL}/orders/${orderId}/confirm`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -58,7 +59,7 @@ function AdminOrders() {
   const assignDelivery = async (orderId, deliveryPersonId) => {
     if (!deliveryPersonId) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${orderId}/assign`, {
+      const res = await fetch(`${API_URL}/orders/${orderId}/assign`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -1,3 +1,4 @@
+import { API_URL } from "../utils/api";
 import { useState, useEffect } from "react";
 import MenuItem from "./MenuItem";
 
@@ -6,7 +7,7 @@ function Menu({ addToCart, searchTerm }) {
   const [dbProducts, setDbProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch(`${API_URL}/products`)
       .then((res) => res.json())
       .then((data) => {
         // Map db products to match front-end structure
