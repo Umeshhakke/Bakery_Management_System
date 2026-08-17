@@ -1,9 +1,10 @@
-import { useState } from "react";
 import { getRequestHeader, API_URL } from "../utils/api";
+
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../components/Header";
-import { getRequestHeader, API_URL } from "../utils/api";
+
 
 import "../styles/Order.css";
 
@@ -74,20 +75,17 @@ function Order({ cart, clearCart }) {
       phone: phone,
       address: address.trim(),
     },
-
     items: cart.map((item) => ({
       itemId: item.id,
       name: item.name,
       quantity: item.quantity,
       price: item.price,
     })),
-
     total: total,
   };
 
   try {
     console.log("Sending order:", orderData);
-
     const response = await fetch(`${API_URL}/orders`, {
       method: "POST",
       headers: getRequestHeader(true),
@@ -95,94 +93,20 @@ function Order({ cart, clearCart }) {
     });
 
     const data = await response.json();
-
     console.log("Backend response:", data);
 
     if (!response.ok) {
       throw new Error(data.message || "Failed to place order");
     }
 
-
-    // Required fields
-    if (!name.trim() || !phone || !address.trim()) {
-
-      alert(
-        "Please fill all delivery details."
-      );
-
-      return;
-    }
-
-
-    // Phone validation
-    if (phone.length !== 10) {
-
-      alert(
-        "Please enter a valid 10-digit phone number."
-      );
-
-      return;
-    }
-
-
-    // =======================================================
-    // ORDER DATA
-    // =======================================================
-
-    const orderData = {
-
-      customer: {
-
-        name: name.trim(),
-
-        phone: phone,
-
-        address: address.trim(),
-
-      },
-
-
-      items: cart.map((item) => ({
-
-        itemId: item.id,
-
-        name: item.name,
-
-        quantity: item.quantity,
-
-        price: item.price,
-
-      })),
-
-
-      total: total,
-
-    };
-
-
-    // =======================================================
-    // SEND TO API
-    // =======================================================
-    
-    fetch(`${API_URL}/orders`, {
-      method: "POST",
-      headers: getRequestHeader(true),
-      body: JSON.stringify(orderData)
-    })
-      .then(res => {
-        if (!res.ok) throw new Error("Failed to place order.");
-        return res.json();
-      })
-      .then(data => {
-        alert("Order placed successfully! 🎉");
-        if (clearCart) clearCart();
-        navigate("/menu");
-      })
-      .catch(err => {
-        console.error(err);
-        alert("Failed to place order.");
-      });
-  };
+    alert("Order placed successfully! 🎉");
+    if (clearCart) clearCart();
+    navigate("/menu");
+  } catch (err) {
+    console.error(err);
+    alert("Failed to place order.");
+  }
+};
 
 
   return (
