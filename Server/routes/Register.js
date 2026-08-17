@@ -125,7 +125,6 @@ router.post("/register", async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
 // 🚚 DELIVERY REGISTER ROUTE
 router.post('/register-delivery' , async(req,res)=>{
     try{
@@ -159,59 +158,25 @@ router.post('/register-delivery' , async(req,res)=>{
     catch(error){
         res.status(500).json({error: "Error encountered"})
     }
-
 });
-
-// 🔑 LOGIN ROUTE
-router.post('/login' , async (req,res)=>{
-    try{
-        const {username , password } = req.body;
-        
-        // ✨ FIXED: Changed 'username' to '{ username }' so Mongoose searches correctly
-        const user = await User.findOne({ username });
-        
-        if(!user) {
-           return res.status(404).json({message: "User not found"});
-        }
-=======
->>>>>>> 1198d52715cd20ef3f694499797498e787ec1360
 
 // =====================================================
 // LOGIN
 // =====================================================
 
 router.post("/login", async (req, res) => {
-
     try {
-
-        const {
-            username,
-            password
-        } = req.body;
+        const { username, password } = req.body;
 
         // Validate fields
         if (!username || !password) {
             return res.status(400).json({
-                message:
-                    "Username and password are required."
+                message: "Username and password are required."
             });
-<<<<<<< HEAD
-            
-            // Clean up: Hidden password from the user response for security
-            const userWithoutPassword = {
-                id: user._id,
-                name: user.name,
-                username: user.username,
-                email: user.email,
-                phone: user.phone,
-                isAdmin: user.isAdmin
-            };
-=======
         }
->>>>>>> 1198d52715cd20ef3f694499797498e787ec1360
 
         // Find user
-       const user = await User.findOne({
+        const user = await User.findOne({
             $or: [
                 { username: username },
                 { email: username }
@@ -225,11 +190,7 @@ router.post("/login", async (req, res) => {
         }
 
         // Compare password
-        const isMatch =
-            await bcrypt.compare(
-                password,
-                user.password
-            );
+        const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
             return res.status(400).json({
@@ -239,13 +200,9 @@ router.post("/login", async (req, res) => {
 
         // Create JWT
         const token = jwt.sign(
-            {
-                id: user._id
-            },
+            { id: user._id },
             process.env.JWT_TOKEN,
-            {
-                expiresIn: "30d"
-            }
+            { expiresIn: "30d" }
         );
 
         // Don't send password
@@ -254,7 +211,9 @@ router.post("/login", async (req, res) => {
             name: user.name,
             username: user.username,
             email: user.email,
-            phone: user.phone
+            phone: user.phone,
+            isAdmin: user.isAdmin,
+            isDeliveryPerson: user.isDeliveryPerson
         };
 
         return res.status(200).json({
@@ -264,17 +223,11 @@ router.post("/login", async (req, res) => {
         });
 
     } catch (error) {
-
-        console.error(
-            "LOGIN ERROR:",
-            error
-        );
-
+        console.error("LOGIN ERROR:", error);
         return res.status(500).json({
             message: "Internal Server Error"
         });
     }
 });
-
 
 module.exports = router;
