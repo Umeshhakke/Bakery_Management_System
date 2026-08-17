@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { API_URL, getRequestHeader } from "../utils/api";
 import "../styles/OrdersDashboard.css";
+import Header from "../components/Header";
 
 function OrdersDashboard() {
   const [orders, setOrders] = useState([]);
@@ -9,8 +10,7 @@ function OrdersDashboard() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-
-      const response = await fetch(`${API_URL}/orders`, {
+      const response = await fetch(`${API_URL}/orders/myorders`, {
         method: "GET",
         headers: getRequestHeader(true),
       });
@@ -21,7 +21,7 @@ function OrdersDashboard() {
         throw new Error(data.message || "Failed to fetch orders");
       }
 
-      setOrders(data.orders || []);
+      setOrders(Array.isArray(data) ? data : data.orders || []);
     } catch (error) {
       console.error("Fetch Orders Error:", error);
       alert(error.message);
@@ -59,6 +59,7 @@ function OrdersDashboard() {
   if (loading) {
     return (
       <div className="orders-dashboard">
+        <Header cartCount={0} />
         <div className="orders-loading">
           <div className="loading-spinner"></div>
           <h2>Loading orders...</h2>
@@ -70,6 +71,7 @@ function OrdersDashboard() {
 
   return (
     <div className="orders-dashboard">
+      <Header cartCount={0} />
 
       {/* =========================
           HEADER
@@ -79,15 +81,15 @@ function OrdersDashboard() {
 
         <div>
           <span className="dashboard-label">
-            BAKERY MANAGEMENT
+            YOUR ORDERS
           </span>
 
           <h1>
-            Customer Orders
+            My Orders
           </h1>
 
           <p>
-            Manage and track orders placed by your customers.
+            Track your past and active orders.
           </p>
         </div>
 
