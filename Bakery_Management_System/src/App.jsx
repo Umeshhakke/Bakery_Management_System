@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate
+} from "react-router-dom";
 
 import "./App.css";
 
@@ -9,85 +14,124 @@ import MenuPage from "./pages/MenuPage";
 import OrderSummary from "./pages/OrderSummary";
 import Profile from "./pages/Profile";
 import Order from "./pages/Order";
+import OrdersDashboard from "./pages/OrdersDashboard";
 
 function App() {
+
   const [cart, setCart] = useState([]);
 
+
+  // =====================================================
   // ADD TO CART
+  // =====================================================
+
   const addToCart = (item) => {
+
     const existingItem = cart.find(
       (cartItem) => cartItem.id === item.id
     );
 
     if (existingItem) {
+
       setCart(
         cart.map((cartItem) =>
           cartItem.id === item.id
             ? {
                 ...cartItem,
-                quantity: cartItem.quantity + 1,
+                quantity: cartItem.quantity + 1
               }
             : cartItem
         )
       );
+
     } else {
+
       setCart([
         ...cart,
         {
           ...item,
-          quantity: 1,
-        },
+          quantity: 1
+        }
       ]);
+
     }
   };
 
+
+  // =====================================================
   // INCREASE QUANTITY
+  // =====================================================
+
   const increaseQuantity = (id) => {
+
     setCart(
       cart.map((item) =>
         item.id === id
           ? {
               ...item,
-              quantity: item.quantity + 1,
+              quantity: item.quantity + 1
             }
           : item
       )
     );
+
   };
 
+
+  // =====================================================
   // DECREASE QUANTITY
+  // =====================================================
+
   const decreaseQuantity = (id) => {
+
     setCart(
       cart
         .map((item) =>
           item.id === id
             ? {
                 ...item,
-                quantity: item.quantity - 1,
+                quantity: item.quantity - 1
               }
             : item
         )
-        .filter((item) => item.quantity > 0)
+        .filter(
+          (item) => item.quantity > 0
+        )
     );
+
   };
 
+
   return (
+
     <BrowserRouter>
+
       <Routes>
 
-        {/* LOGIN */}
+        {/* =============================================
+            LOGIN
+        ============================================== */}
+
         <Route
           path="/"
           element={<Login />}
         />
 
-        {/* REGISTER */}
+
+        {/* =============================================
+            REGISTER
+        ============================================== */}
+
         <Route
           path="/register"
           element={<Register />}
         />
 
-        {/* MENU */}
+
+        {/* =============================================
+            MENU
+        ============================================== */}
+
         <Route
           path="/menu"
           element={
@@ -98,7 +142,11 @@ function App() {
           }
         />
 
-        {/* CART / ORDER SUMMARY */}
+
+        {/* =============================================
+            ORDER SUMMARY / CART
+        ============================================== */}
+
         <Route
           path="/order"
           element={
@@ -110,11 +158,21 @@ function App() {
           }
         />
 
-         <Route
-        path="/profile"
-        element={<Profile />}
-      />
-        {/* ORDER DETAILS */}
+
+        {/* =============================================
+            PROFILE
+        ============================================== */}
+
+        <Route
+          path="/profile"
+          element={<Profile />}
+        />
+
+
+        {/* =============================================
+            ORDER DETAILS
+        ============================================== */}
+
         <Route
           path="/order-details"
           element={
@@ -124,14 +182,35 @@ function App() {
           }
         />
 
-        {/* FALLBACK */}
+
+        {/* =============================================
+            STAFF / ORDER DASHBOARD
+        ============================================== */}
+
+        <Route
+          path="/orders-dashboard"
+          element={<OrdersDashboard />}
+        />
+
+
+        {/* =============================================
+            FALLBACK
+        ============================================== */}
+
         <Route
           path="*"
-          element={<Navigate to="/" replace />}
+          element={
+            <Navigate
+              to="/"
+              replace
+            />
+          }
         />
 
       </Routes>
+
     </BrowserRouter>
+
   );
 }
 

@@ -18,59 +18,96 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
 
+    // Check required fields
     if (
-      !name ||
-      !username||
-      !email ||
-      !phone ||
-      !password ||
-      !confirmPassword
+        !name ||
+        !username ||
+        !email ||
+        !phone ||
+        !password ||
+        !confirmPassword
     ) {
-      alert("Please fill all fields.");
-      return;
+        alert("Please fill all fields.");
+        return;
     }
 
+    // Check phone
     if (phone.length !== 10) {
-      alert("Please enter a valid 10-digit phone number.");
-      return;
+        alert("Please enter a valid 10-digit phone number.");
+        return;
     }
 
+    // Check password
     if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return;
+        alert("Passwords do not match.");
+        return;
     }
 
-    // Temporary frontend registration.
-    // Later this will connect to your friend's Java API.
-    console.log("Customer Registration:", {
-      fullName: name,
-      user_name:username,
-      email: email,
-      phone: phone,
-      password: password,
-    });
+    try {
 
+        console.log("Customer Registration:", {
+            name,
+            username,
+            email,
+            phone
+        });
 
+        const response = await fetch(
+            `${API_URL}/auth/register`,
+            {
+                method: "POST",
 
-    const response = await fetch(`${API_URL}/auth/register` , {method:"POST" , headers:getRequestHeader(true) , body:JSON.stringify({name ,username , password , email , phone })});
-    const data = await response.json();
+                headers: getRequestHeader(true),
 
-    if(!response.ok){
-      throw new Error(data.message || 'Authentication Failed');
+                body: JSON.stringify({
+                    name,
+                    username,
+                    password,
+                    email,
+                    phone
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        console.log("Backend Response:", data);
+
+        // Backend returned an error
+        if (!response.ok) {
+            throw new Error(
+                data.message ||
+                "Registration failed."
+            );
+        }
+
+        // Registration successful
+        alert("Account created successfully!");
+
+        // Save authentication information
+        localStorage.setItem(
+            "token",
+            data.token
+        );
+
+        localStorage.setItem(
+            "user",
+            JSON.stringify(data.user)
+        );
+
+        // Go to login
+        navigate("/login");
+
+    } catch (error) {
+
+        console.error(
+            "Registration Error:",
+            error
+        );
+
+        alert(error.message);
     }
-    alert("Account created successfully!");
-
-
-    localStorage.setItem('token',data.token);
-    localStorage.setItem('user' , JSON.stringify(data.user));
-    setSuccessAlert('Login successful! Access granted.');
-
-    setTimeout(() => {
-        window.location.href = '/menu';
-      }, 1000);
-
-  };
-
+};
   
 
   return (

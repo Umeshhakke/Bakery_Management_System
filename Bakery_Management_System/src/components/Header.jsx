@@ -81,6 +81,28 @@ function Header({ cartCount }) {
           </Link>
 
 
+          {/* ORDERS */}
+          <Link
+            to="/orders-dashboard"
+            className="header-action orders-button"
+          >
+            <span className="action-icon">
+
+              <svg viewBox="0 0 24 24">
+                <path d="M6 3h12v18H6z" />
+                <path d="M9 7h6" />
+                <path d="M9 11h6" />
+                <path d="M9 15h4" />
+              </svg>
+
+            </span>
+
+            <span className="action-text">
+              Orders
+            </span>
+          </Link>
+
+
           {/* CART */}
           <Link
             to="/order"

@@ -18,14 +18,16 @@ connectDB();
 const RegisterUser = require("./routes/Register");
 const {protect} = require("./middleware/authMiddleware");
 const Profile = require("./routes/Profile");
+const Order = require("./routes/Order");
 
 
 app.use(express.json());
 app.use('/api/auth',RegisterUser);
 app.use('/api/profile',protect,Profile)
+app.use("/api/orders", Order);
 
-app.listen(process.env.PORT || 5000 , ()=>{
-    console.log(`Server started at port localhost:${process.env.PORT}`);
+const PORT = process.env.PORT || 5000;
 
-
-})
+app.listen(PORT, () => {
+    console.log(`Server started at port localhost:${PORT}`);
+});

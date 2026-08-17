@@ -4,77 +4,214 @@ const bcrypt = require("bcrypt");
 const User = require("../model/User");
 const jwt = require("jsonwebtoken");
 
-// 📝 REGISTER ROUTE
-router.post('/register' , async(req,res)=>{
-    try{
-        const{name, username , password , email, phone } = req.body;
+// =====================================================
+// REGISTER
+// =====================================================
 
-        if(!username || !password || !email || !phone || !name){
-            return res.status(400).json({message:"Email , Password, Phone , Username Required"});
+router.post("/register", async (req, res) => {
+    try {
+        const {
+            name,
+            username,
+            password,
+            email,
+            phone
+        } = req.body;
+
+        // Check required fields
+        if (
+            !name ||
+            !username ||
+            !password ||
+            !email ||
+            !phone
+        ) {
+            return res.status(400).json({
+                message:
+                    "Name, Username, Password, Email and Phone are required."
+            });
         }
-        const salt = await bcrypt.genSalt(10);
-        const hashpassword = await bcrypt.hash(password , salt);
 
+        // Check whether email already exists
+        const existingEmail = await User.findOne({ email });
+
+        if (existingEmail) {
+            return res.status(400).json({
+                message:
+                    "Email already registered. Please login instead."
+            });
+        }
+
+        // Check whether username already exists
+        const existingUsername = await User.findOne({
+            username
+        });
+
+        if (existingUsername) {
+            return res.status(400).json({
+                message:
+                    "Username already exists. Please choose another username."
+            });
+        }
+
+        // Hash password
+        const salt = await bcrypt.genSalt(10);
+
+        const hashpassword = await bcrypt.hash(
+            password,
+            salt
+        );
+
+        // Create new user
         const newUser = new User({
             name,
-            username, 
-            password : hashpassword,
+            username,
+            password: hashpassword,
             email,
             phone,
-            address:null,
-        })
+            address: null
+        });
+
         await newUser.save();
 
-        let token = jwt.sign({id:newUser._id},process.env.JWT_TOKEN,{
-            expiresIn:'30d',
-        });
-        
-        res.status(200).json({message: "User Added sucessfully" , token : token,
-            user: {id:newUser._id , username:newUser.username , email:newUser.email, phone:newUser.phone}
-        });
-    }
-    catch(error){
-        res.status(500).json({error: "Error encountered"})
-    }
+        // Create JWT token
+        const token = jwt.sign(
+            {
+                id: newUser._id
+            },
+            process.env.JWT_TOKEN,
+            {
+                expiresIn: "30d"
+            }
+        );
 
+        // Send response
+        return res.status(201).json({
+            message: "User added successfully",
+
+            token: token,
+
+            user: {
+                id: newUser._id,
+                name: newUser.name,
+                username: newUser.username,
+                email: newUser.email,
+                phone: newUser.phone
+            }
+        });
+
+    } catch (error) {
+
+        console.error(
+            "REGISTRATION ERROR:",
+            error
+        );
+
+        // MongoDB duplicate-key error
+        if (error.code === 11000) {
+
+            const duplicateField =
+                Object.keys(error.keyPattern || {})[0];
+
+            return res.status(400).json({
+                message:
+                    `${duplicateField} already exists. Please use a different value.`
+            });
+        }
+
+        return res.status(500).json({
+            message: "Internal Server Error"
+        });
+    }
 });
 
-// 🔑 LOGIN ROUTE
-router.post('/login' , async (req,res)=>{
-    try{
-        const {username , password } = req.body;
-        
-        // ✨ FIXED: Changed 'username' to '{ username }' so Mongoose searches correctly
-        const user = await User.findOne({ username });
-        
-        if(!user) {
-           return res.status(404).json({message: "User not found"});
-        }
 
-        const isMatch = await bcrypt.compare(password , user.password);
-        if(isMatch){
+// =====================================================
+// LOGIN
+// =====================================================
 
-            let token = jwt.sign({id:user._id},process.env.JWT_TOKEN,{
-                expiresIn:'30d',
+router.post("/login", async (req, res) => {
+
+    try {
+
+        const {
+            username,
+            password
+        } = req.body;
+
+        // Validate fields
+        if (!username || !password) {
+            return res.status(400).json({
+                message:
+                    "Username and password are required."
             });
-            
-            // Clean up: Hidden password from the user response for security
-            const userWithoutPassword = {
-                id: user._id,
-                name: user.name,
-                username: user.username,
-                email: user.email,
-                phone: user.phone
-            };
+        }
 
-            return res.status(200).json({message: "Login Sucessfull" , token : token , user: userWithoutPassword});
+        // Find user
+       const user = await User.findOne({
+            $or: [
+                { username: username },
+                { email: username }
+            ]
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found."
+            });
         }
-        else{
-            return res.status(400).json({message: "Invalid Credentials"});
+
+        // Compare password
+        const isMatch =
+            await bcrypt.compare(
+                password,
+                user.password
+            );
+
+        if (!isMatch) {
+            return res.status(400).json({
+                message: "Invalid credentials."
+            });
         }
-    }catch(error){
-        return res.status(500).json({message: "Internal Server Error"});
+
+        // Create JWT
+        const token = jwt.sign(
+            {
+                id: user._id
+            },
+            process.env.JWT_TOKEN,
+            {
+                expiresIn: "30d"
+            }
+        );
+
+        // Don't send password
+        const userWithoutPassword = {
+            id: user._id,
+            name: user.name,
+            username: user.username,
+            email: user.email,
+            phone: user.phone
+        };
+
+        return res.status(200).json({
+            message: "Login successful",
+            token: token,
+            user: userWithoutPassword
+        });
+
+    } catch (error) {
+
+        console.error(
+            "LOGIN ERROR:",
+            error
+        );
+
+        return res.status(500).json({
+            message: "Internal Server Error"
+        });
     }
-})
+});
 
-module.exports = router;    
+
+module.exports = router;

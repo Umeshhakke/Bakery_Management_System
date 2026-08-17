@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getRequestHeader, API_URL } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../components/Header";
@@ -45,99 +46,68 @@ function Order({ cart }) {
   // SUBMIT ORDER
   // =========================================================
 
-  const handleSubmit = (e) => {
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    e.preventDefault();
+  if (cart.length === 0) {
+    alert("Your cart is empty.");
+    navigate("/menu");
+    return;
+  }
 
+  if (!name.trim() || !phone || !address.trim()) {
+    alert("Please fill all delivery details.");
+    return;
+  }
 
-    // Empty cart
-    if (cart.length === 0) {
+  if (phone.length !== 10) {
+    alert("Please enter a valid 10-digit phone number.");
+    return;
+  }
 
-      alert("Your cart is empty.");
+  const orderData = {
+    customer: {
+      name: name.trim(),
+      phone: phone,
+      address: address.trim(),
+    },
 
-      navigate("/menu");
+    items: cart.map((item) => ({
+      itemId: item.id,
+      name: item.name,
+      quantity: item.quantity,
+      price: item.price,
+    })),
 
-      return;
+    total: total,
+  };
+
+  try {
+    console.log("Sending order:", orderData);
+
+    const response = await fetch(`${API_URL}/orders`, {
+      method: "POST",
+      headers: getRequestHeader(true),
+      body: JSON.stringify(orderData),
+    });
+
+    const data = await response.json();
+
+    console.log("Backend response:", data);
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to place order");
     }
 
-
-    // Required fields
-    if (!name.trim() || !phone || !address.trim()) {
-
-      alert(
-        "Please fill all delivery details."
-      );
-
-      return;
-    }
-
-
-    // Phone validation
-    if (phone.length !== 10) {
-
-      alert(
-        "Please enter a valid 10-digit phone number."
-      );
-
-      return;
-    }
-
-
-    // =======================================================
-    // ORDER DATA
-    // =======================================================
-
-    const orderData = {
-
-      customer: {
-
-        name: name.trim(),
-
-        phone: phone,
-
-        address: address.trim(),
-
-      },
-
-
-      items: cart.map((item) => ({
-
-        itemId: item.id,
-
-        name: item.name,
-
-        quantity: item.quantity,
-
-        price: item.price,
-
-      })),
-
-
-      total: total,
-
-    };
-
-
-    // =======================================================
-    // TEMPORARY
-    // Later connect this to Java API
-    // =======================================================
-
-    console.log(
-      "ORDER DATA:",
-      orderData
-    );
-
-
-    alert(
-      "Order placed successfully! 🎉"
-    );
-
+    alert("Order placed successfully! 🎉");
 
     navigate("/menu");
 
-  };
-
+  } catch (error) {
+    console.error("ORDER ERROR:", error);
+    alert(error.message || "Something went wrong while placing the order.");
+  }
+};
 
   return (
 
