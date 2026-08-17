@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { API_URL, getRequestHeader } from "../utils/api";
 import "../styles/OrdersDashboard.css";
 import Header from "../components/Header";
@@ -63,7 +64,7 @@ function OrdersDashboard() {
         <div className="orders-loading">
           <div className="loading-spinner"></div>
           <h2>Loading orders...</h2>
-          <p>Fetching the latest customer orders.</p>
+          <p>Fetching your orders.</p>
         </div>
       </div>
     );
@@ -176,7 +177,7 @@ function OrdersDashboard() {
           </h2>
 
           <p>
-            Orders placed by customers will appear here.
+            Your placed orders will appear here.
           </p>
 
         </div>
@@ -329,10 +330,27 @@ function OrdersDashboard() {
                   </strong>
                 </div>
 
-                <span className="item-count">
-                  {order.items?.length || 0} product
-                  {(order.items?.length || 0) !== 1 ? "s" : ""}
-                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <span className="item-count">
+                    {order.items?.length || 0} product
+                    {(order.items?.length || 0) !== 1 ? "s" : ""}
+                  </span>
+                  
+                  <Link 
+                    to={`/my-orders/${order._id}`} 
+                    style={{
+                      background: '#3498db',
+                      color: 'white',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '4px',
+                      textDecoration: 'none',
+                      fontWeight: 'bold',
+                      fontSize: '0.9rem'
+                    }}
+                  >
+                    View Details
+                  </Link>
+                </div>
 
               </div>
 
