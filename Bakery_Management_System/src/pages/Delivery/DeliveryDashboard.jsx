@@ -126,7 +126,10 @@ function DeliveryDashboard() {
       {/* HEADER */}
       <header style={{ background: "#2c3e50", color: "#fff", padding: "1rem 2rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <h1 style={{ margin: 0, fontSize: "1.5rem" }}>Delivery Dashboard</h1>
-        <button onClick={handleLogout} style={{ padding: "0.5rem 1rem", background: "#e74c3c", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "bold" }}>Logout</button>
+        <div style={{ display: "flex", gap: "1rem" }}>
+          <button onClick={() => navigate("/delivery/profile")} style={{ padding: "0.5rem 1rem", background: "#3498db", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "bold" }}>Profile</button>
+          <button onClick={handleLogout} style={{ padding: "0.5rem 1rem", background: "#e74c3c", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "bold" }}>Logout</button>
+        </div>
       </header>
 
       <div style={{ maxWidth: "1000px", margin: "2rem auto", padding: "0 1rem" }}>
@@ -195,7 +198,7 @@ function DeliveryDashboard() {
               </div>
 
               <div style={{ background: "#f9fbfb", padding: "1rem", borderRadius: "6px", marginBottom: "1rem" }}>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "1rem", borderBottom: "1px solid #eee", paddingBottom: "1rem" }}>
                   <div style={{ flex: "1 1 200px" }}>
                     <p style={{ margin: "0 0 0.3rem", fontSize: "0.85rem", color: "#7f8c8d", textTransform: "uppercase" }}>Customer</p>
                     <p style={{ margin: 0, fontWeight: "bold", color: "#34495e" }}>{o.customer.name}</p>
@@ -205,6 +208,17 @@ function DeliveryDashboard() {
                     <p style={{ margin: "0 0 0.3rem", fontSize: "0.85rem", color: "#7f8c8d", textTransform: "uppercase" }}>Delivery Address</p>
                     <p style={{ margin: 0, color: "#34495e", lineHeight: 1.4 }}>📍 {o.customer.address}</p>
                   </div>
+                </div>
+                
+                <div>
+                  <h4 style={{ margin: "0 0 0.5rem", color: "#2c3e50" }}>Ordered Items:</h4>
+                  <ul style={{ margin: 0, paddingLeft: "1.5rem", color: "#34495e" }}>
+                    {o.items?.map((item, index) => (
+                      <li key={`${item.itemId || item._id}-${index}`} style={{ marginBottom: "0.2rem" }}>
+                        <strong>{item.name}</strong> - {item.quantity} x ₹{item.price}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
 

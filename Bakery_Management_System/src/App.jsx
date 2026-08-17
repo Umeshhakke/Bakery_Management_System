@@ -22,6 +22,7 @@ import AdminOrders from "./pages/Admin/AdminOrders";
 import DeliveryLogin from "./pages/Delivery/DeliveryLogin";
 import DeliveryRegister from "./pages/Delivery/DeliveryRegister";
 import DeliveryDashboard from "./pages/Delivery/DeliveryDashboard";
+import DeliveryProfile from "./pages/Delivery/DeliveryProfile";
 import UserOrderDetails from "./pages/UserOrderDetails";
 import OrdersDashboard from "./pages/OrdersDashboard";
 
@@ -216,6 +217,10 @@ function App() {
         <Route
           path="/delivery/dashboard"
           element={<DeliveryDashboard />}
+        />
+        <Route
+          path="/delivery/profile"
+          element={<DeliveryProfile />}
         />
         {/* ORDER DETAILS */}
         <Route
