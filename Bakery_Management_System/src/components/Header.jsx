@@ -1,8 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "../styles/Header.css";
 
 function Header({ cartCount, searchTerm, setSearchTerm }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
   return (
     <header className="main-header">
 
@@ -129,6 +135,25 @@ function Header({ cartCount, searchTerm, setSearchTerm }) {
               {cartCount}
             </span>
           </Link>
+
+          {/* LOGOUT */}
+          <button
+            type="button"
+            className="header-action logout-button"
+            onClick={handleLogout}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          >
+            <span className="action-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+            </span>
+            <span className="action-text">
+              Logout
+            </span>
+          </button>
 
         </div>
 
